@@ -6,20 +6,6 @@ function Signup(){
     const [isChecked, setIsChecked] = useState(false)
     const [isSubmitted, setIsSubmitted] = useState(false)
     const [validationErrors, setValidationErrors] = useState({})
-    const handleChange = () => {
-        setIsChecked(!isChecked);
-      };
-
-    const handleChangeCreator = attribute => {
-        return e => {
-            setNewUser(prev => ({...prev, [attribute]: e.target.value}))
-        }
-    }
-
-    const handleSubmit = e => {
-        e.preventDefault();
-        setNewUser({name: '', email: '', phoneNumber: '', phoneType: '', staff: '', bio: '', notification: true})
-    } 
 
     useEffect(() => {
         if (isSubmitted) {
@@ -32,6 +18,24 @@ function Signup(){
           setValidationErrors(errors);
         }
     }, [newUser.name, newUser.email, newUser.phoneNumber, newUser.phoneType, newUser.bio])
+
+    const handleChange = () => {
+        setIsChecked(!isChecked);
+      };
+
+    const handleChangeCreator = attribute => {
+        return e => {
+            setNewUser(prev => ({...prev, [attribute]: e.target.value}))
+        }
+    }
+
+    const handleSubmit = e => {
+        e.preventDefault();
+        setIsSubmitted(true);
+        console.log(Object.values(validationErrors))
+        if (Object.values(validationErrors).length) return alert(`Cannot Submit`);
+        setNewUser({name: '', email: '', phoneNumber: '', phoneType: '', staff: '', bio: '', notification: true})
+    } 
 
     return (
         <div>
